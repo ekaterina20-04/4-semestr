@@ -5,6 +5,8 @@ using namespace std;
 числа в порядке возрастания.*/
 
 void PrimeDivisors(int n, int divisor) {
+	if (n <= 1) return;
+
 	if (n % divisor == 0) {
 		cout << divisor << " ";
 		while (n % divisor == 0) {
