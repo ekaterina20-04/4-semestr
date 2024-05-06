@@ -6,7 +6,7 @@
 
 using namespace std;
 
-// Граф в виде словаря
+// создаем граф в виде словаря
 map<string, vector<string>> graph = {
 	{"A", {"S"}},
 	{"B", {"C", "D", "S"}},
@@ -21,23 +21,15 @@ map<string, vector<string>> graph = {
 	{"S", {"A", "B", "D", "E"}}
 };
 
-// Функция для поиска кратчайшего пути в ширину
 vector<string> bfs(string start, string end) {
-	// Очередь для вершин, которые нужно обойти
-	queue<string> q;
-	// Словарь для хранения расстояния до каждой вершины
+	queue<string> q; //контейнер, который хранит элементы в порядке, в котором они были добавлены
 	map<string, int> dist;
-	// Словарь для хранения предшественника для каждой вершины
-	map<string, string> prev;
-	// Очередь для вершин, которые нужно обойти
+	map<string, string> prev;// Словарь предшественника
 	q.push(start);
-	// Расстояние до стартовой вершины равно 0
 	dist[start] = 0;
-	// Предшественник стартовой вершины - это сама стартовая вершина
-	prev[start] = "";
+	prev[start] = ""; //расстояние от нач верш до себя 0,предшествующая является пустой строкой
 
 	while (!q.empty()) {
-		// Выбираем вершину из очереди
 		string curr = q.front();
 		q.pop();
 
@@ -55,7 +47,7 @@ vector<string> bfs(string start, string end) {
 
 		// Обходим все смежные вершины
 		for (string neighbor : graph[curr]) {
-			// Если мы не visited соседа, то обновляем расстояние и предшественника
+			// Если мы не видим соседа, то обновляем расстояние и предшественника
 			if (dist.find(neighbor) == dist.end() || dist[neighbor] > dist[curr] + 1) {
 				dist[neighbor] = dist[curr] + 1;
 				prev[neighbor] = curr;
@@ -74,7 +66,7 @@ int main() {
 	string end = "I";
 	vector<string> path = bfs(start, end);
 
-	if (!path.empty()) {
+	if (!path.empty()) { //если контейнер не пустой
 		cout << "Кратчайший путь от " << start << " до " << end << ": ";
 		for (string vertex : path) {
 			cout << vertex << " ";
